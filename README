@@ -1,0 +1,41 @@
+# About
+Small supervisor daemon and cli version, can restart service, cannot make coffee.
+
+# Install
+pip3 install -r requirements.txt
+
+# Use daemon version
+usage: supervisord.py [-h] [--proccess PROCCESS] [--command COMMAND] [--interval INTERVAL] [--retry RETRY] [--wait WAIT] [--log LOG]
+                     action
+
+Small supervising daemon
+
+positional arguments:
+  action               Available actions: start/stop/restart
+
+optional arguments:
+  -h, --help           show this help message and exit
+  --proccess PROCCESS  Process to monitor. Default: sleep
+  --command COMMAND    Command to start daemon. Default: sleep 20
+  --interval INTERVAL  Interval between checks in seconds. Default: 3
+  --retry RETRY        Attempts to restart failed daemon. Default: 3
+  --wait WAIT          Time to wait beetween restarts in seconds. Default: 3
+  --log LOG            Enable logging. Options: yes/no. Default: yes
+
+# Use CLI version
+usage: supervisor-cli.py [-h] [--proccess PROCCESS] [--command COMMAND] [--interval INTERVAL] [--retry RETRY] [--wait WAIT] [--log LOG]
+
+Small supervising daemon
+
+optional arguments:
+  -h, --help           show this help message and exit
+  --proccess PROCCESS  Process to monitor. Default: sleep
+  --command COMMAND    Command to start daemon. Default: sleep 20
+  --interval INTERVAL  Interval between checks in seconds. Default: 3
+  --retry RETRY        Attempts to restart failed daemon. Default: 3
+  --wait WAIT          Time to wait beetween restarts in seconds. Default: 3
+  --log LOG            Enable logging. Options: yes/no. Default: no
+
+
+# Monitor
+tail -f ./supervisor.log

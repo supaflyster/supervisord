@@ -1,0 +1,112 @@
+## Normal run. Daemon not failing
+./supervisor-cli.py --command 'sleep 8 &' --interval 1 --wait 3 --retry 3
+06-05-2022 10:45:23: sleep is not running! restarting
+06-05-2022 10:45:23: Restarting attempt: 1
+06-05-2022 10:45:23: Running: sleep 8 &
+06-05-2022 10:45:23: Start programm exit code: 0
+06-05-2022 10:45:24: sleep is running. Waiting...
+06-05-2022 10:45:25: sleep is running. Waiting...
+06-05-2022 10:45:26: sleep is running. Waiting...
+06-05-2022 10:45:27: sleep is running. Waiting...
+06-05-2022 10:45:28: sleep is running. Waiting...
+06-05-2022 10:45:29: sleep is running. Waiting...
+06-05-2022 10:45:30: sleep is running. Waiting...
+06-05-2022 10:45:31: sleep is not running! restarting
+06-05-2022 10:45:32: Restarting attempt: 1
+06-05-2022 10:45:32: Running: sleep 8 &
+06-05-2022 10:45:32: Start programm exit code: 0
+06-05-2022 10:45:33: sleep is running. Waiting...
+06-05-2022 10:45:34: sleep is running. Waiting...
+06-05-2022 10:45:35: sleep is running. Waiting...
+06-05-2022 10:45:36: sleep is running. Waiting...
+06-05-2022 10:45:37: sleep is running. Waiting...
+
+# Crashing
+./supervisor-cli.py --command "sleep 1 && exit 0" --interval 1 --wait 2 --retry 4
+06-05-2022 10:46:00: sleep is not running! restarting
+06-05-2022 10:46:00: Restarting attempt: 1
+06-05-2022 10:46:00: Running: sleep 1 && exit 0
+06-05-2022 10:46:01: Start programm exit code: 0
+06-05-2022 10:46:01: Restarting attempt: 2
+06-05-2022 10:46:01: Running: sleep 1 && exit 0
+06-05-2022 10:46:04: Start programm exit code: 0
+06-05-2022 10:46:04: Restarting attempt: 3
+06-05-2022 10:46:04: Running: sleep 1 && exit 0
+06-05-2022 10:46:07: Start programm exit code: 0
+06-05-2022 10:46:07: Restarting attempt: 4
+06-05-2022 10:46:07: Running: sleep 1 && exit 0
+06-05-2022 10:46:10: Start programm exit code: 0
+06-05-2022 10:46:10: Failed to restart service
+
+./supervisor-cli.py --command "sleep 5 && exit 0" --interval 1 --wait 2 --retry 4
+06-05-2022 10:46:32: sleep is not running! restarting
+06-05-2022 10:46:32: Restarting attempt: 1
+06-05-2022 10:46:32: Running: sleep 5 && exit 0
+06-05-2022 10:46:37: Start programm exit code: 0
+06-05-2022 10:46:37: Restarting attempt: 2
+06-05-2022 10:46:37: Running: sleep 5 && exit 0
+06-05-2022 10:46:44: Start programm exit code: 0
+06-05-2022 10:46:44: Restarting attempt: 3
+06-05-2022 10:46:44: Running: sleep 5 && exit 0
+06-05-2022 10:46:51: Start programm exit code: 0
+06-05-2022 10:46:51: Restarting attempt: 4
+06-05-2022 10:46:51: Running: sleep 5 && exit 0
+06-05-2022 10:46:58: Start programm exit code: 0
+06-05-2022 10:46:58: Failed to restart service
+
+
+./supervisor-cli.py --command "sleep 1 && exit 1" --interval 1 --wait 2 --retry 4
+06-05-2022 10:47:21: sleep is not running! restarting
+06-05-2022 10:47:21: Restarting attempt: 1
+06-05-2022 10:47:21: Running: sleep 1 && exit 1
+06-05-2022 10:47:22: Start programm exit code: 1
+06-05-2022 10:47:22: Restarting attempt: 2
+06-05-2022 10:47:22: Running: sleep 1 && exit 1
+06-05-2022 10:47:25: Start programm exit code: 1
+06-05-2022 10:47:25: Restarting attempt: 3
+06-05-2022 10:47:25: Running: sleep 1 && exit 1
+06-05-2022 10:47:28: Start programm exit code: 1
+06-05-2022 10:47:28: Restarting attempt: 4
+06-05-2022 10:47:28: Running: sleep 1 && exit 1
+06-05-2022 10:47:31: Start programm exit code: 1
+06-05-2022 10:47:31: Failed to restart service
+
+./supervisor-cli.py --command "sleep 10 && exit 1" --interval 1 --wait 2 --retry 4
+06-05-2022 10:47:53: sleep is not running! restarting
+06-05-2022 10:47:53: Restarting attempt: 1
+06-05-2022 10:47:53: Running: sleep 10 && exit 1
+06-05-2022 10:48:03: Start programm exit code: 1
+06-05-2022 10:48:03: Restarting attempt: 2
+06-05-2022 10:48:03: Running: sleep 10 && exit 1
+06-05-2022 10:48:15: Start programm exit code: 1
+06-05-2022 10:48:15: Restarting attempt: 3
+06-05-2022 10:48:15: Running: sleep 10 && exit 1
+06-05-2022 10:48:27: Start programm exit code: 1
+06-05-2022 10:48:27: Restarting attempt: 4
+06-05-2022 10:48:27: Running: sleep 10 && exit 1
+06-05-2022 10:48:39: Start programm exit code: 1
+06-05-2022 10:48:39: Failed to restart service
+
+ ./supervisor-cli.py --command 'bash -c "if [ -f lock ]; then exit 1; fi; sleep 10 && touch lock && exit 1"' --interval 1 --wait 2 --retry 4
+06-05-2022 10:41:01: sleep is not running! restarting
+06-05-2022 10:41:01: Restarting attempt: 1
+06-05-2022 10:41:01: Running: bash -c "if [ -f lock ]; then exit 1; fi; sleep 10 && touch lock && exit 1"
+06-05-2022 10:41:13: Start programm exit code: 1
+06-05-2022 10:41:13: Restarting attempt: 2
+06-05-2022 10:41:13: Running: bash -c "if [ -f lock ]; then exit 1; fi; sleep 10 && touch lock && exit 1"
+06-05-2022 10:41:15: Start programm exit code: 1
+06-05-2022 10:41:15: Restarting attempt: 3
+06-05-2022 10:41:15: Running: bash -c "if [ -f lock ]; then exit 1; fi; sleep 10 && touch lock && exit 1"
+06-05-2022 10:41:17: Start programm exit code: 1
+06-05-2022 10:41:17: Restarting attempt: 4
+06-05-2022 10:41:17: Running: bash -c "if [ -f lock ]; then exit 1; fi; sleep 10 && touch lock && exit 1"
+06-05-2022 10:41:19: Start programm exit code: 1
+06-05-2022 10:41:19: Failed to restart service
+
+
+ ./supervisor-cli.py --command 'bash -c "if [ -f lock ]; then exit 1; fi; sleep 10 && touch lock && exit 1"' --interval 1 --wait 2 --retry 1
+06-05-2022 10:44:20: sleep is not running! restarting
+06-05-2022 10:44:20: Restarting attempt: 1
+06-05-2022 10:44:20: Running: bash -c "if [ -f lock ]; then exit 1; fi; sleep 10 && touch lock && exit 1"
+06-05-2022 10:44:30: Start programm exit code: 1
+06-05-2022 10:44:30: Failed to restart service
