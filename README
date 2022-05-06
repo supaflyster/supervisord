@@ -5,8 +5,7 @@ Small supervisor daemon and cli version, can restart service, cannot make coffee
 pip3 install -r requirements.txt
 
 # Use daemon version
-usage: supervisord.py [-h] [--proccess PROCCESS] [--command COMMAND] [--interval INTERVAL] [--retry RETRY] [--wait WAIT] [--log LOG]
-                     action
+usage: supervisord.py [-h] [--proccess PROCCESS] [--command COMMAND] [--interval INTERVAL] [--retry RETRY] [--wait WAIT] [--log LOG] action
 
 Small supervising daemon
 
