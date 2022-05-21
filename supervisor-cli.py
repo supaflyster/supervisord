@@ -71,7 +71,7 @@ def check_run():
             if p.returncode == 0 and checkProcess(proc_name):
                 break
             # If not and we exausted all attempts - sadnes. requires restart to continue monitoring
-            elif current_attempt >= attempt:
+            if current_attempt >= attempt:
                 logger("Failed to restart service")
                 sys.exit()
 
