@@ -12,13 +12,14 @@ from daemons import daemonizer
 # Add some help and read parameters
 parser = argparse.ArgumentParser(description=''' Small supervising daemon ''')
 parser.add_argument('action', help='Available actions: start/stop/restart')
-parser.add_argument('--proccess', default='sleep', help='Process to monitor. Default: sleep')
+parser.add_argument('--process', default='sleep', help='Process to monitor. Default: sleep')
 parser.add_argument('--command', default='sleep 20 &', help='Command to start daemon. Default: sleep 20')
 parser.add_argument('--interval', type=int, default=3, help='Interval between checks in seconds. Default: 3')
 parser.add_argument('--retry', type=int, default=3, help='Attempts to restart failed daemon. Default: 3')
-parser.add_argument('--wait', type=int, default=3, help='Time to wait beetween restarts in seconds. Default: 3')
+parser.add_argument('--wait', type=int, default=3, help='Time to wait between restarts in seconds. Default: 3')
 parser.add_argument('--log', default="yes", help='Enable logging. Options: yes/no. Default: yes')
 args = parser.parse_args()
+
 
 # Boolean: Checks if process is running
 def checkProcess(procName):
@@ -30,6 +31,7 @@ def checkProcess(procName):
             pass
     return False
 
+
 # Void: Writes log files if logging is enabled
 def logger(message):
     log = args.log.lower()
@@ -37,6 +39,7 @@ def logger(message):
         logging.info(message)
     else:
         return
+
 
 # Void: Runs check and restarts service
 def check_run():
@@ -48,9 +51,9 @@ def check_run():
     # Init counter
     current_attempt = 0
     # Is daemon alive? Then ok
-    if  checkProcess(proc_name):
+    if checkProcess(proc_name):
         logger(proc_name + " is running. Waiting...")
-    # Ooops, daemon is dead. Let's try to restart it
+    # Oops, daemon is dead. Let's try to restart it
     else:
         logger(proc_name + " is not running! restarting")
         # Do not try so hard
@@ -61,19 +64,20 @@ def check_run():
             time.sleep(time_wait)
             # Start it and get exit code
             p = subprocess.run(start_command, shell=True)
-            logger("Start programm exit code: " + str(p.returncode))
+            logger("Start program exit code: " + str(p.returncode))
             # Bump counter
             current_attempt += 1
-            # If daemon started and have not died after sucessful start - happines
+            # If daemon started and have not died after successful start - happiness
             if p.returncode == 0 and checkProcess(proc_name):
                 break
-            # If not and we exausted all attempts - sadnes. requires restart to continue monitoring
+            # If not and we exhausted all attempts - sadness. requires restart to continue monitoring
             if current_attempt >= attempt:
                 logger("Failed to restart service")
                 # Break the loop
                 run_schedule = False
                 # Clear schedule
                 schedule.clear()
+
 
 # Void: Daemonized. Initializes scheduler with a check
 @daemonizer.run(pidfile=os.path.join(os.getcwd(), "supervisor.pid"))
@@ -123,7 +127,6 @@ def main() -> None:
         print(art)
     else:
         parser.print_help()
-
 
 
 if __name__ == '__main__':
