@@ -10,14 +10,32 @@ import psutil
 from daemons import daemonizer
 
 # Add some help and read parameters
-parser = argparse.ArgumentParser(description=''' Small supervising daemon ''')
-parser.add_argument('action', help='Available actions: start/stop/restart')
-parser.add_argument('--process', default='sleep', help='Process to monitor. Default: sleep')
-parser.add_argument('--command', default='sleep 20 &', help='Command to start daemon. Default: sleep 20')
-parser.add_argument('--interval', type=int, default=3, help='Interval between checks in seconds. Default: 3')
-parser.add_argument('--retry', type=int, default=3, help='Attempts to restart failed daemon. Default: 3')
-parser.add_argument('--wait', type=int, default=3, help='Time to wait between restarts in seconds. Default: 3')
-parser.add_argument('--log', default="yes", help='Enable logging. Options: yes/no. Default: yes')
+parser = argparse.ArgumentParser(description=""" Small supervising daemon """)
+parser.add_argument("action", help="Available actions: start/stop/restart")
+parser.add_argument(
+    "--process", default="sleep", help="Process to monitor. Default: sleep"
+)
+parser.add_argument(
+    "--command", default="sleep 20 &", help="Command to start daemon. Default: sleep 20"
+)
+parser.add_argument(
+    "--interval",
+    type=int,
+    default=3,
+    help="Interval between checks in seconds. Default: 3",
+)
+parser.add_argument(
+    "--retry", type=int, default=3, help="Attempts to restart failed daemon. Default: 3"
+)
+parser.add_argument(
+    "--wait",
+    type=int,
+    default=3,
+    help="Time to wait between restarts in seconds. Default: 3",
+)
+parser.add_argument(
+    "--log", default="yes", help="Enable logging. Options: yes/no. Default: yes"
+)
 args = parser.parse_args()
 
 
@@ -97,10 +115,12 @@ def main() -> None:
     action = args.action
     # Configure logging
     logfile = os.path.join(os.getcwd(), "supervisor.log")
-    logging.basicConfig(filename=logfile,
-                        level=logging.INFO,
-                        datefmt='%d-%m-%Y %H:%M:%S',
-                        format='%(asctime)s: %(message)s')
+    logging.basicConfig(
+        filename=logfile,
+        level=logging.INFO,
+        datefmt="%d-%m-%Y %H:%M:%S",
+        format="%(asctime)s: %(message)s",
+    )
 
     if action == "start":
 
@@ -116,18 +136,18 @@ def main() -> None:
         run()
 
     elif action == "coffee":
-        art = '''
+        art = """
                    )))
                    (((
                  +-----+
                  |     |]
                  `-----'
                ___________
-               `---------'  '''
+               `---------'  """
         print(art)
     else:
         parser.print_help()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

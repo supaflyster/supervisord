@@ -11,13 +11,31 @@ import psutil
 import schedule
 
 # Add some help and read parameters
-parser = argparse.ArgumentParser(description=''' Small supervising daemon ''')
-parser.add_argument('--process', default='sleep', help='Process to monitor. Default: sleep')
-parser.add_argument('--command', default='sleep 20 &', help='Command to start daemon. Default: sleep 20')
-parser.add_argument('--interval', type=int, default=3, help='Interval between checks in seconds. Default: 3')
-parser.add_argument('--retry', type=int, default=3, help='Attempts to restart failed daemon. Default: 3')
-parser.add_argument('--wait', type=int, default=3, help='Time to wait between restarts in seconds. Default: 3')
-parser.add_argument('--log', default="no", help='Enable logging. Options: yes/no. Default: no')
+parser = argparse.ArgumentParser(description=""" Small supervising daemon """)
+parser.add_argument(
+    "--process", default="sleep", help="Process to monitor. Default: sleep"
+)
+parser.add_argument(
+    "--command", default="sleep 20 &", help="Command to start daemon. Default: sleep 20"
+)
+parser.add_argument(
+    "--interval",
+    type=int,
+    default=3,
+    help="Interval between checks in seconds. Default: 3",
+)
+parser.add_argument(
+    "--retry", type=int, default=3, help="Attempts to restart failed daemon. Default: 3"
+)
+parser.add_argument(
+    "--wait",
+    type=int,
+    default=3,
+    help="Time to wait between restarts in seconds. Default: 3",
+)
+parser.add_argument(
+    "--log", default="no", help="Enable logging. Options: yes/no. Default: no"
+)
 args = parser.parse_args()
 
 
@@ -36,7 +54,7 @@ def checkProcess(procName):
 def logger(message):
     log = args.log.lower()
     now = datetime.datetime.now()
-    print(str(now.strftime('%d-%m-%Y %H:%M:%S')) + ": " + message)
+    print(str(now.strftime("%d-%m-%Y %H:%M:%S")) + ": " + message)
     if log == "yes":
         logging.info(message)
     else:
@@ -85,10 +103,12 @@ def main() -> None:
     interval_sec = args.interval
     run_schedule = True
     # Configure logging
-    logging.basicConfig(filename=logfile,
-                        level=logging.INFO,
-                        datefmt='%d-%m-%Y %H:%M:%S',
-                        format='%(asctime)s: %(message)s')
+    logging.basicConfig(
+        filename=logfile,
+        level=logging.INFO,
+        datefmt="%d-%m-%Y %H:%M:%S",
+        format="%(asctime)s: %(message)s",
+    )
 
     # Start schedule with configured interval
     schedule.every(interval_sec).seconds.do(check_run)
@@ -97,5 +117,5 @@ def main() -> None:
         schedule.run_pending()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
